@@ -1,4 +1,4 @@
-package com.oolong.wordle.ui
+package com.oolong.wordle
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

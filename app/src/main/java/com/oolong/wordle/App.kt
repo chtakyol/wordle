@@ -1,8 +1,6 @@
-package com.oolong.wordle.ui
+package com.oolong.wordle
 
 import android.app.Application
-import android.content.Context
-import android.util.Log
 import com.oolong.wordle.domain.WordDomainObj
 import com.oolong.wordle.domain.usecase.GetRandomWordUseCase
 import com.oolong.wordle.domain.usecase.GetSavedDayUseCase

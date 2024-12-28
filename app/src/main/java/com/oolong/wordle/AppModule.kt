@@ -1,4 +1,4 @@
-package com.oolong.wordle.ui
+package com.oolong.wordle
 
 import android.content.Context
 import androidx.datastore.core.DataStore
