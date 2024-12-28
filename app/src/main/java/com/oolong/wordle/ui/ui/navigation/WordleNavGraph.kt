@@ -17,7 +17,9 @@ fun WordleNavGraph() {
 
     NavHost(navController = navController, startDestination = startDestination) {
         composable(Screen.GameBoardScreen.route) {
-            GameBoardScreen()
+            GameBoardScreen(
+                onMenuButtonClicked = actions.popBackStack
+            )
         }
 
         composable(Screen.StartScreen.route) {
