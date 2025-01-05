@@ -30,6 +30,22 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(System.getenv("WORDLE_KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
+            storePassword = System.getenv("WORDLE_KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("WORDLE_KEY_ALIAS")
+            keyPassword = System.getenv("WORDLE_KEY_PASSWORD")
+        }
+
+        getByName("debug") {
+            storeFile = file(System.getenv("WORDLE_KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
+            storePassword = System.getenv("WORDLE_KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("WORDLE_KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -37,8 +53,13 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release")
+        }
+        debug {
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
