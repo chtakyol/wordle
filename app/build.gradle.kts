@@ -32,14 +32,14 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
+            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "/my-release-key.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
             keyAlias = System.getenv("KEY_ALIAS")
             keyPassword = System.getenv("KEY_PASSWORD")
         }
 
-        getByName("debug") {
-            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
+        create("debug") {
+            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "/my-release-key.jks")
             storePassword = System.getenv("KEYSTORE_PASSWORD")
             keyAlias = System.getenv("KEY_ALIAS")
             keyPassword = System.getenv("KEY_PASSWORD")
@@ -47,7 +47,7 @@ android {
     }
 
     buildTypes {
-        release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -55,7 +55,7 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
         }
-        debug {
+        getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
         }
     }
