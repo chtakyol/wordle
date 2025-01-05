@@ -32,16 +32,16 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(System.getenv("WORDLE_KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
-            storePassword = System.getenv("WORDLE_KEYSTORE_PASSWORD")
-            keyAlias = System.getenv("WORDLE_KEY_ALIAS")
-            keyPassword = System.getenv("WORDLE_KEY_PASSWORD")
+            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
+            keyPassword = System.getenv("KEY_PASSWORD")
         }
 
         getByName("debug") {
-            storeFile = file(System.getenv("WORDLE_KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
-            storePassword = System.getenv("WORDLE_KEYSTORE_PASSWORD")
-            keyAlias = System.getenv("WORDLE_KEY_ALIAS")
+            storeFile = file(System.getenv("KEYSTORE_FILE") ?: "/Users/cihat.akyol/AndroidStudioProjects/wordle/my-release-key.jks")
+            storePassword = System.getenv("KEYSTORE_PASSWORD")
+            keyAlias = System.getenv("KEY_ALIAS")
             keyPassword = System.getenv("KEY_PASSWORD")
         }
     }
