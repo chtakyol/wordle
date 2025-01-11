@@ -48,9 +48,9 @@ android {
             )
             signingConfig = signingConfigs.getByName("release")
         }
-        getByName("debug") {
-            signingConfig = signingConfigs.getByName("debug")
-        }
+//        getByName("debug") {
+//            signingConfig = signingConfigs.getByName("debug")
+//        }
     }
 
     compileOptions {
