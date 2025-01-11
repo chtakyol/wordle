@@ -33,6 +33,16 @@ jobs:
           echo "Keystore file is empty or missing!" && exit 1
           fi
 
+      - name: Debug Environment Variables
+        run: |
+          echo "KEYSTORE_PASSWORD is set" 
+          echo "KEY_ALIAS is set"
+          echo "KEY_PASSWORD is set"
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
       - name: Build the project
         run: ./gradlew assembleRelease --no-daemon
         env:
