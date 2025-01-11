@@ -48,10 +48,10 @@ jobs:
           mv ./my-release-key.jks ./app/my-release-key.jks
 
       - name: Check Keystore File Existence
-        run: ls -l ./my-release-key.jks
+        run: ls -l ./app/my-release-key.jks
 
       - name: Check Keystore Path
-        run: realpath ./my-release-key.jks
+        run: realpath ./app/my-release-key.jks
 
       - name: Build the project
         run: ./gradlew assembleRelease --no-daemon
