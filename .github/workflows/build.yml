@@ -43,6 +43,10 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Move Keystore File
+        run: |
+          mv ./my-release-key.jks ./app/my-release-key.jks
+
       - name: Check Keystore File Existence
         run: ls -l ./my-release-key.jks
 
