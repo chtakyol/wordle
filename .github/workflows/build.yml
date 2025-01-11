@@ -46,6 +46,9 @@ jobs:
       - name: Check Keystore File Existence
         run: ls -l ./my-release-key.jks
 
+      - name: Check Keystore Path
+        run: realpath ./my-release-key.jks
+
       - name: Build the project
         run: ./gradlew assembleRelease --no-daemon
         env:
