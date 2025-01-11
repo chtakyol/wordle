@@ -43,6 +43,9 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
+      - name: Check Keystore File Existence
+        run: ls -l ./my-release-key.jks
+
       - name: Build the project
         run: ./gradlew assembleRelease --no-daemon
         env:
