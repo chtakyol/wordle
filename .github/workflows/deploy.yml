@@ -27,12 +27,9 @@ jobs:
         run: sudo apt-get install -y openssl
 
       - name: Decrypt JSON File
-        env:
-          GOOGLE_PLAY_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          OPENSSL_PASSWORD: ${{ secrets.OPENSSL_PASSWORD }}
         run: |
-          echo "GOOGLE_PLAY_SERVICE_ACCOUNT" | base64 -d > playstore_credentials.json.enc
-          openssl enc -aes-256-cbc -d -in playstore_credentials.json.enc -out ./fastlane/playstore_credentials.json -k "OPENSSL_PASSWORD"
+#          echo "GOOGLE_PLAY_SERVICE_ACCOUNT" | base64 -d > playstore_credentials.json.enc
+          openssl enc -aes-256-cbc -d -in ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }} -out ./fastlane/playstore_credentials.json -k ${{ secrets.OPENSSL_PASSWORD }}
 
       - name: Install Fastlane
         run: sudo gem install fastlane
