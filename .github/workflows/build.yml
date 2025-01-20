@@ -56,15 +56,3 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Upload to Google Play
-        uses: r0adkll/upload-google-play-action@v1
-        with:
-          serviceAccountJson: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: "com.example.wordle"  # Replace with your actual package name
-          appApk: "app/build/outputs/bundle/release/app-release.aab"  # Path to your .aab file
-          track: "production"  # Track can be 'internal', 'beta', or 'production'

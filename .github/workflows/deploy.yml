@@ -1,0 +1,41 @@
+name: Deploy to Play Store
+
+on:
+  push:
+    branches:
+      - main  # Replace with your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.1'
+
+      - name: Install Dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Install OpenSSL
+        run: sudo apt-get install -y openssl
+
+      - name: Decrypt JSON File
+        env:
+          GOOGLE_PLAY_SERVICE_ACCOUNT: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          OPENSSL_PASSWORD: ${{ secrets.OPENSSL_PASSWORD }}
+        run: |
+          echo "GOOGLE_PLAY_SERVICE_ACCOUNT" | base64 -d > playstore_credentials.json.enc
+          openssl enc -aes-256-cbc -d -in playstore_credentials.json.enc -out ./fastlane/playstore_credentials.json -k "OPENSSL_PASSWORD"
+
+      - name: Install Fastlane
+        run: sudo gem install fastlane
+
+      - name: Deploy to Internal Testing
+        run: fastlane internal_test
