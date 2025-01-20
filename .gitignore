@@ -13,3 +13,6 @@
 .externalNativeBuild
 .cxx
 local.properties
+my-release-key.jks
+my-release-key.jks.base64
+.kotlin/sessions/kotlin-compiler-13082048047478884790.salive
