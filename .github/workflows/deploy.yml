@@ -26,6 +26,12 @@ jobs:
       - name: Install OpenSSL
         run: sudo apt-get install -y openssl
 
+      - name: Decode and Write Keystore File
+        run: |
+          echo "${{ secrets.KEYSTORE_FILE }}" | openssl base64 -d -out my-release-key.jks
+        env:
+          KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
+
       - name: Decrypt JSON File
         run: |
           echo "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}" | openssl base64 -d -out ./fastlane/playstore_credentials.json
