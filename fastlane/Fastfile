@@ -52,7 +52,7 @@ end
 lane :internal_test do
   gradle(
     task: 'bundle',
-    build_type: 'Release'
+    build_type: 'Release',
     properties: {
       "android.injected.signing.store.file" => ENV["KEYSTORE_FILE"],
       "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
