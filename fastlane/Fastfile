@@ -51,9 +51,6 @@ end
 
 lane :internal_test do
   keystore_path = File.expand_path("../my-release-key.jks", __dir__)
-  puts "Keystore Password: #{ENV['KEYSTORE_PASSWORD']}"
-  puts "Key Alias: #{ENV['KEY_ALIAS']}"
-  puts "Key Password: #{ENV['KEY_PASSWORD']}"
   gradle(
     task: 'bundle',
     build_type: 'Release',
