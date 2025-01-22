@@ -21,6 +21,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
+### check_keystore
+
+```sh
+[bundle exec] fastlane check_keystore
+```
+
+
+
 ### internal_test
 
 ```sh
