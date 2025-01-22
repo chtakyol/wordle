@@ -1,6 +1,9 @@
-name: Build
+name: Build test apk
 
-on: push
+on:
+  push:
+    branches:
+      - develop
 
 jobs:
   build:
@@ -56,3 +59,9 @@ jobs:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-apk
+          path: app/build/outputs/apk/release/*.apk
