@@ -47,10 +47,11 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("release")
+            buildConfigField("String", "BUILD_TYPE", "\"release\"")
         }
-//        getByName("debug") {
-//            signingConfig = signingConfigs.getByName("debug")
-//        }
+        getByName("debug") {
+            buildConfigField("String", "BUILD_TYPE", "\"debug\"")
+        }
     }
 
     compileOptions {
@@ -62,6 +63,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 

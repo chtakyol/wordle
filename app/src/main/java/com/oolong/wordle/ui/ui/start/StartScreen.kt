@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.oolong.wordle.BuildConfig
 
 @Composable
 fun StartScreen(
@@ -30,7 +31,8 @@ fun StartScreenContent(
     ) {
         
         Text(text = "Logo")
-        
+        Text(text = "Build type: ${BuildConfig.BUILD_TYPE}")
+
         Button(
             onClick = { onDailyWordleClick() }
         ) {

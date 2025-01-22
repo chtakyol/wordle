@@ -53,7 +53,7 @@ jobs:
         run: realpath ./my-release-key.jks
 
       - name: Build the project
-        run: ./gradlew assembleRelease --no-daemon
+        run: ./gradlew assemble --no-daemon
         env:
           KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
