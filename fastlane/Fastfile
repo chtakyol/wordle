@@ -56,7 +56,7 @@ lane :internal_test do
     build_type: 'Release',
     properties: {
       "android.injected.signing.store.file" => keystore_path,
-      "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+      "android.injected.signing.store.password" => ENV["KEY_PASSWORD"],
       "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
       "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
     }
