@@ -3,7 +3,7 @@ name: Deploy to Play Store
 on:
   push:
     branches:
-      - master  # Replace with your default branch
+      - master
 
 jobs:
   deploy:
@@ -57,7 +57,7 @@ jobs:
       - name: Check Keystore Path
         run: realpath ./my-release-key.jks
 
-      - name: Decrypt JSON File
+      - name: Decrypt Play Store Credentials File
         run: |
           echo "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}" | openssl base64 -d -out ./fastlane/playstore_credentials.json
 
@@ -66,3 +66,7 @@ jobs:
 
       - name: Deploy to Internal Testing
         run: fastlane internal_test
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}

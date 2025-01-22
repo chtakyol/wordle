@@ -1,3 +1,2 @@
 json_key_file("./playstore_credentials.json")
-# json_key_file("/Users/cihat.akyol/Downloads/word-find-446914-5ed6c356db8a.json")
 package_name("com.oolong.wordle")
