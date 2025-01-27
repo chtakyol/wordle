@@ -1,16 +1,15 @@
-name: Deploy to Play Store
+name: Build signed test apk
 
 on:
   push:
-    branches:
-      - master
+    tags:
+      - "deploy-internal-test*"
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set Up Ruby
@@ -32,6 +31,31 @@ jobs:
         env:
           KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
 
+      - name: Verify Keystore File
+        run: |
+          if [ -s my-release-key.jks ]; then
+          echo "Keystore file created successfully."
+          ls -l my-release-key.jks
+          else
+          echo "Keystore file is empty or missing!" && exit 1
+          fi
+
+      - name: Debug Environment Variables
+        run: |
+          echo "KEYSTORE_PASSWORD is set" 
+          echo "KEY_ALIAS is set"
+          echo "KEY_PASSWORD is set"
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Check Keystore File Existence
+        run: ls -l ./my-release-key.jks
+
+      - name: Check Keystore Path
+        run: realpath ./my-release-key.jks
+
       - name: Decrypt Play Store Credentials File
         run: |
           echo "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}" | openssl base64 -d -out ./fastlane/playstore_credentials.json
@@ -43,7 +67,7 @@ jobs:
         run: fastlane test
 
       - name: Deploy to Internal Testing
-        run: fastlane upload_to_beta
+        run: fastlane internal_test
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}

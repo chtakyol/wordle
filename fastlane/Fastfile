@@ -37,19 +37,19 @@ default_platform(:android)
 #   end
 # end
 
+lane :test do
+gradle(task: "test")
+end
 
-lane :playstore do
+lane :debug_build do
   gradle(
-    task: 'bundle',
-    build_type: 'Release'
-  )
-
-  upload_to_play_store(
-  skip_upload_apk: true
+    task: 'assembleDebug',
+    build_type: 'Debug'
   )
 end
 
-lane :internal_test do
+
+lane :upload_to_internal_test do
   keystore_path = File.expand_path("../my-release-key.jks", __dir__)
   gradle(
     task: 'bundle',
@@ -69,4 +69,37 @@ lane :internal_test do
       skip_upload_images: true,
       skip_upload_screenshots: true
   )
+end
+
+lane :upload_to_beta do
+  keystore_path = File.expand_path("../my-release-key.jks", __dir__)
+  gradle(
+    task: 'bundle',
+    build_type: 'Release',
+    properties: {
+      "android.injected.signing.store.file" => keystore_path,
+      "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+      "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
+      "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
+    }
+  )
+  upload_to_play_store(
+    skip_upload_apk: true
+    track: 'beta'
+  )
+end
+
+lane :upload_to_production do
+  keystore_path = File.expand_path("../my-release-key.jks", __dir__)
+  gradle(
+    task: 'bundle',
+    build_type: 'Release',
+    properties: {
+      "android.injected.signing.store.file" => keystore_path,
+      "android.injected.signing.store.password" => ENV["KEYSTORE_PASSWORD"],
+      "android.injected.signing.key.alias" => ENV["KEY_ALIAS"],
+      "android.injected.signing.key.password" => ENV["KEY_PASSWORD"]
+    }
+  )
+  upload_to_play_store
 end
