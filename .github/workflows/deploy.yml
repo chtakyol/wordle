@@ -42,7 +42,7 @@ jobs:
       - name: Test
         run: fastlane test
 
-      - name: Deploy to Internal Testing
+      - name: Deploy to Beta Testing
         run: fastlane upload_to_beta
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
