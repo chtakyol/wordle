@@ -2,8 +2,8 @@ name: Build signed test apk
 
 on:
   push:
-    branches:
-      - develop
+    tags:
+      - "deploy-internal-test*"
 
 jobs:
   build:
@@ -12,14 +12,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set Up JDK
-        uses: actions/setup-java@v4
+      - name: Set Up Ruby
+        uses: ruby/setup-ruby@v1
         with:
-          distribution: 'zulu'
-          java-version: 17
+          ruby-version: '3.1'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Install Dependencies
+        run: |
+          gem install bundler
+          bundle install
+
+      - name: Install OpenSSL
+        run: sudo apt-get install -y openssl
 
       - name: Decode and Write Keystore File
         run: |
@@ -52,16 +56,16 @@ jobs:
       - name: Check Keystore Path
         run: realpath ./my-release-key.jks
 
-      - name: Build the project
-        run: ./gradlew assembleRelease --no-daemon
+      - name: Decrypt Play Store Credentials File
+        run: |
+          echo "${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}" | openssl base64 -d -out ./fastlane/playstore_credentials.json
+
+      - name: Install Fastlane
+        run: sudo gem install fastlane
+
+      - name: Deploy to Internal Testing
+        run: fastlane internal_test
         env:
-          KEYSTORE_FILE: ${{ secrets.KEYSTORE_FILE }}
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v3
-        with:
-          name: signed-test-apk
-          path: app/build/outputs/apk/release/*.apk
